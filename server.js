@@ -6,6 +6,8 @@
 
   // Allow CORS: we'll use this today to reduce security so we can more easily test our code in the browser.
   app.use(express.static('public'));
+  app.use(express.static('vendor'));
+
 
     app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -15,7 +17,7 @@
 
   //Some data on the SERVER-SIDE
 
-  var disneyFam =[
+  var disneyFam = [
     {name: 'Mickey'},
     {name: "Minnie"},
     {name: 'Stitch'},
@@ -42,7 +44,7 @@
   // Routes
   app.get('/', function(req, res) {
     //res.send('Hello World!');
-    res.sendFile('views/index.html', { root : __dirname});
+    res.sendFile('/views/index.html', { root : __dirname});
     console.log(__dirname);
   });
 
@@ -50,13 +52,11 @@
     res.json(albums);
   });
 
-  app.get('/api/disneyFam', function (req, res) {
+  app.get('/api/disneyFam', function (req,res) {
     res.json(disneyFam);
-    //console.log(disneyFam);
   });
 
-
 //process.env.PORT || 3000 means "in production use the production port, otherwise use 3000 (for development)".
-  app.listen(process.env.PORT || 3000, function () {
-    console.log('Example app listening at http://localhost:3000/');
+  app.listen(process.env.PORT || 5000, function () {
+    console.log('Example app listening at http://localhost:5000/');
   });

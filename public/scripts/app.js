@@ -2,26 +2,45 @@ console.log("Sanity Check: JS is working!");
 
 $(document).ready(function(){
 
-  // code in here
-  $.ajax({
+  // GET albums
+ $.ajax({
    method: 'GET',
-   url: 'http://localhost:3000/api/albums',
+   url: 'http://localhost:5000/api/albums',
    success: handleSuccess,
    error: handleError
  });
 
-// MOVED SUCESS FUNCTION OUT OF THE DOC READY FUNCTION
 
- function handleError(xhr, status, errorThrown) {
-   console.log('uh oh');
- }
 
+$.ajax({
+  method: 'GET',
+  url: 'http://localhost:5000/api/disneyFam',
+  success: handleResponse,
+  error: handleError
 });
 
+
+// MOVED SUCESS FUNCTION OUT OF THE DOC READY FUNCTION
+});
+function handleError(xhr, status, errorThrown) {
+  console.log('uh oh');
+}
+
+
+//Displays data for disneyFam data
+function handleResponse(json) {
+ $('h1.disney').text('Disney Characters');
+ json.forEach(function(character){
+   console.log(character.name)
+   $('.char').append($(`<p>${character.name}</p>`));
+ })
+}
+
+//Albums to show
 function handleSuccess(json) {
   console.log(json);
-  json.forEach(function(event, i){
-    $('#info').append($(`<p> ${json[i].title} ${json[i].artist} </p>`));
-    $('h1').text('Music');
+  $('h1.uc').text('Music');
+  json.forEach(function(album){
+  $('.info').append(`<p>${album.title},  ${album.artist} </p>`);
   })
 }
